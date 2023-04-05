@@ -52,6 +52,7 @@ float setposition =0;
 float ControlInput =0;
 float Duty =100;
 int Mode = 0;
+int32_t QEIReadRawSign;
 
 /* USER CODE END PV */
 
@@ -108,9 +109,9 @@ int main(void)
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_1|TIM_CHANNEL_2);
 
-  PID.Kp =20;
-  PID.Ki = 0.1;
-  PID.Kd = 5;
+  PID.Kp =10;
+  PID.Ki =0.1;
+  PID.Kd = 0;
   arm_pid_init_f32(&PID, 1);
   /* USER CODE END 2 */
 
@@ -131,7 +132,8 @@ int main(void)
 
 		  ControlInput = arm_pid_f32(&PID, setposition-position);
 		  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2);
-		  position = ((QEIReadRaw+1)/3072.0)*360;
+		  QEIReadRawSign = (int32_t)QEIReadRaw ;
+		  position = ((QEIReadRawSign+1)/3072.0)*360;
 		  voltToPWM();
 
 		  if (Mode == 1)
@@ -300,7 +302,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 307200-1;
+  htim2.Init.Period = 4294967295 ;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
