@@ -109,8 +109,8 @@ int main(void)
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_1|TIM_CHANNEL_2);
 
-  PID.Kp =10;
-  PID.Ki =0.1;
+  PID.Kp =27;
+  PID.Ki =0.2;
   PID.Kd = 0;
   arm_pid_init_f32(&PID, 1);
   /* USER CODE END 2 */
@@ -406,7 +406,7 @@ void voltToPWM(){
 		else if ( ControlInput < 0){
 			Duty = 0;
 		}
-		else{
+		else if (ControlInput < 1000 &&ControlInput > 0 ){
 			Duty = ControlInput;
 		}
 	}
