@@ -406,7 +406,7 @@ void voltToPWM(){
 		else if ( ControlInput < 0){
 			Duty = 0;
 		}
-		else if (ControlInput < 1000 &&ControlInput > 0 ){
+		else {
 			Duty = ControlInput;
 		}
 	}
