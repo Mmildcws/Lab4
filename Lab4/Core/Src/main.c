@@ -133,7 +133,7 @@ int main(void)
 		  ControlInput = arm_pid_f32(&PID, setposition-position);
 		  QEIReadRaw = __HAL_TIM_GET_COUNTER(&htim2);
 		  QEIReadRawSign = (int32_t)QEIReadRaw ;
-		  position = ((QEIReadRawSign+1)/3072.0)*360;
+		  position = ((QEIReadRawSign)/3072.0)*360;
 		  voltToPWM();
 
 		  if (Mode == 1)
@@ -302,7 +302,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295 ;
+  htim2.Init.Period = 4294967295 .;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
